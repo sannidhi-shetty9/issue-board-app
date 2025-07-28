@@ -15,6 +15,7 @@ export type Issue = {
 export type PartialIssue = Partial<Issue>;
 
 export type User = {
+  id: number;
   name: string;
   role: 'admin' | 'contributor'
 }
