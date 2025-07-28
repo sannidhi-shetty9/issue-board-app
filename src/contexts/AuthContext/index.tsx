@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import { type User } from "../../types";
 import { registeredUsers } from "../../constants/currentUser";
+import { getLocalStorage, setLocalStorage } from "../../utils/storage";
 
 
 
@@ -22,7 +23,7 @@ export const useAuth = () => useContext(AuthContext)
 
 
 export const AuthProvider = ({ children }: { children: ReactNode}) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>(getLocalStorage('user'));
     const isAdmin = useMemo(() => user?.role === 'admin', [user])
 
     const login = (name: string) => {
@@ -32,11 +33,13 @@ export const AuthProvider = ({ children }: { children: ReactNode}) => {
         }
 
         setUser(newUser)
+        setLocalStorage('user', newUser)
         return true;
     }
 
     const logout = () => {
         setUser(null);
+        setLocalStorage('user', null)
     }
 
 

@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import type { Issue, PartialIssue } from "../../types";
 import { mockFetchIssues } from "../../utils/api";
+import { getLocalStorage, setLocalStorage } from "../../utils/storage";
 
 const maxRecentAccessedIssues = 2;
+const recentAccessedIssuesStoreageName = 'recentAccessedIssues';
 
 type SeveritiesType = {
   [key: number | string]: boolean;
@@ -83,6 +85,11 @@ export const IssueProvider = ({ children }: { children: React.ReactNode }) => {
   const [recentAccessedIssues, setRecentAccessedIssues] = useState<Issue[]>([]);
 
   useEffect(() => {
+    const storedRecent = getLocalStorage<Issue[]>(recentAccessedIssuesStoreageName) || []
+    setRecentAccessedIssues(storedRecent)
+  }, [])
+
+  useEffect(() => {
     mockFetchIssues().then((res) => {
       const sortedIssues = [...(res as Issue[])].sort(sortIssue);
       issuesRef.current = sortedIssues;
@@ -136,6 +143,7 @@ export const IssueProvider = ({ children }: { children: React.ReactNode }) => {
         issue,
         ...prev.filter((item) => issue.id !== item.id),
       ].slice(0, maxRecentAccessedIssues);
+      setLocalStorage<Issue[]>(recentAccessedIssuesStoreageName, updatedIssues)
       return updatedIssues;
     });
   };
