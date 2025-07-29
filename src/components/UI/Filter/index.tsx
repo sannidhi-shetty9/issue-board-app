@@ -1,11 +1,10 @@
 import { ChevronDown } from "lucide-react";
 import Dropdown, { type DropdownRef } from "../DropDown";
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 
 export interface FilterProps<T> {
   label?: string;
   options?: T[];
-//   selected?: T[];
   renderOption?: (option: T) => ReactNode;
   onClick?: (option: T, index: number) => T;
   renderKey?: (option: T) => string;
@@ -23,14 +22,11 @@ export interface FilterProps<T> {
 export default function Filter<T>({
   label = "",
   options = [],
-//   selected = [],
   renderOption = () => "",
-  onClick = () => {},
   renderKey,
 }: FilterProps<T>) {
 
   const dropdownRef = useRef<DropdownRef>(null);
-  const [open, setOpen] = useState(false)
 
   const optionsElem = <div>
     {options.map((option, index) => {

@@ -11,7 +11,7 @@ interface SelectProps<T> {
   options: T[];
   value: T | null;
   onChange?: (value: T) => void;
-  getOptionLabel: (option: T, index: number) => React.ReactNode;
+  getOptionLabel: (option: T) => React.ReactNode;
   getOptionValue: (option: T) => string | number;
   placeholder?: React.ReactNode;
   renderLabel?: (params: {
@@ -43,7 +43,7 @@ function createSelectComponent<T>() {
         value,
         onChange = () => {},
         getOptionLabel,
-        getOptionValue,
+        // getOptionValue,
         placeholder = "Select...",
         renderLabel,
         className = "",

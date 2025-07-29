@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SearchIssue from "../issue/Searchissue";
 import { useAuth } from "../../contexts/AuthContext";
 import { LogOut } from "lucide-react";

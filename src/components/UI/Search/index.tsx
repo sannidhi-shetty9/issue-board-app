@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import Dropdown from "../DropDown";
 import Input from "../input";
-import { Search as SearchIcon, X } from "lucide-react";
+import { X } from "lucide-react";
 import { debounce } from "../../../utils";
 
 export interface SearchProps {

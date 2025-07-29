@@ -57,7 +57,7 @@ const Dropdown = forwardRef<DropdownRef, DropdownProps>(
     // const [shouldRender, setShouldRender] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const timeoutRef = useRef<number | null>(null);
     const [height, setHeight] = useState("0px");
 
     // imperative handle to expose methods to parents

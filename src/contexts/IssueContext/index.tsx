@@ -50,8 +50,11 @@ const sortIssue = (a: Issue, b: Issue) => {
     const daysA = getDaysSinceCreated(a.createdAt);
     const daysB = getDaysSinceCreated(b.createdAt);
 
-    const rankA = a.userDefinedRank ?? 0;
-    const rankB = b.userDefinedRank ?? 0;
+    // const rankA = a.userDefinedRank ?? 0;
+    // const rankB = b.userDefinedRank ?? 0;
+
+    const rankA = 0;
+    const rankB = 0;
 
     const scoreA = a.severity * 10 + daysA * -1 + rankA;
     const scoreB = b.severity * 10 + daysB * -1 + rankB;
@@ -141,7 +144,7 @@ export const IssueProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    const newIssues = issuesRef.current.filter((issue, index) => {
+    const newIssues = issuesRef.current.filter((issue) => {
       return severities[issue.severity] && assignees[issue.assignee];
     });
     setIssues(newIssues);

@@ -1,17 +1,13 @@
 import { useMemo, type ReactNode } from "react";
-import type { Issue, PartialIssue } from "../../types";
+import type { Issue } from "../../types";
 import { Drag, Drop } from "../UI/DragAndDrop";
 import { useToast } from "../../contexts/ToastContext";
 import { useIssue } from "../../contexts/IssueContext";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
-interface IssueProps {
-  //   issues: Issue[];
-  //   update: (id: string, issue: PartialIssue) => {};
-}
 
-export default function Issues({}: IssueProps) {
+export default function Issues() {
   const navigate = useNavigate();
   const { showToast } = useToast();
   const { isAdmin } = useAuth();

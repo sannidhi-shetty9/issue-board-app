@@ -1,7 +1,6 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { Search } from "lucide-react"; // Or use Heroicons
 import Input from ".";
-import { debounce } from "../../../utils";
 
 export default function SearchInput() {
   const [query, setQuery] = useState("");
@@ -11,13 +10,13 @@ export default function SearchInput() {
   }, []);
 
   // This function does the actual "search"
-  const handleSearch = useCallback((input: string) => {}, []);
+  const handleSearch = useCallback(() => {}, []);
 
   // Debounce it and memoize to avoid recreation on every render
-  const debouncedSearch = useMemo(
-    () => debounce(handleSearch, 500),
-    [handleSearch]
-  );
+  // const debouncedSearch = useMemo(
+  //   () => debounce(handleSearch, 500),
+  //   [handleSearch]
+  // );
 
   return (
     <Input
@@ -30,7 +29,7 @@ export default function SearchInput() {
         <Search
           className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
           size={20}
-          onClick={() => handleSearch(query)}
+          onClick={() => handleSearch()}
         />
       }
     />

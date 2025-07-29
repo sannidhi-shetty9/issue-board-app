@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { ToastProvider } from "../contexts/ToastContext";
 import { IssueProvider } from "../contexts/IssueContext";
 import Header from "../components/Header";

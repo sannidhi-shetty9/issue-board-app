@@ -21,14 +21,14 @@ export default function AssigneesFilter() {
     <Select
       value={null}
       options={[[ALL, all], ...assigneesList]}
-      renderLabel={({ selected, isOpen }) => (
+      renderLabel={() => (
         <div className="flex items-center gap-1">
           <div>Assignees</div>
           <ChevronDown className={``} />
         </div>
       )}
     //   onChange={(val) => console.log(val)}
-      getOptionLabel={([key, value], index) => (
+      getOptionLabel={([key, value]) => (
         <div
           className="flex items-center gap-1 cursor-pointer min-w-[120px]"
           onClick={() => {

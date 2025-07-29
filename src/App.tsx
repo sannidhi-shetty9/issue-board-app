@@ -2,7 +2,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
 import RootLayout from './routes/root'
-import Home from './routes/home'
 import Board from './routes/board'
 import IssuePage from './routes/issue'
 import Settings from './routes/settings'

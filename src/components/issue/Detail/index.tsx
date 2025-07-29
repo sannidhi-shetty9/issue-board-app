@@ -40,14 +40,14 @@ export default function IssueDetail() {
       value={null}
       options={otherStatus}
       closeOnSelect={true}
-      renderLabel={({ selected, isOpen }) => (
+      renderLabel={() => (
         <div className="flex items-center gap-2">
           <div>{status}</div>
           <ChevronDown className={``} />
         </div>
       )}
       //   onChange={(val) => console.log(val)}
-      getOptionLabel={(value, index) => (
+      getOptionLabel={(value) => (
         <div
           className="flex items-center gap-1 cursor-pointer"
           onClick={() => {
