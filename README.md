@@ -2,7 +2,9 @@
 
 A Kanban-style issue board built with **React**, **TypeScript**, and **Tailwind CSS** — inspired by tools like Jira and GitHub Projects.
 
-This is a demo project with mocked data and local state. It simulates features like issue management, sorting, filtering, drag-and-drop, undo, role-based access, and polling.
+This is a **demo project** that uses **mocked JSON data** and local state. It simulates features like issue management, sorting, filtering, drag-and-drop, undo, role-based access, and polling.
+
+🟢 **Live Demo:** [https://issue-board-app.vercel.app](https://issue-board-app.vercel.app)
 
 ---
 
@@ -19,18 +21,16 @@ This is a demo project with mocked data and local state. It simulates features l
   - `admin`: Full access
   - `contributor`: Read-only view
 - 🌘 **Dark Mode**: Toggle for light/dark theme
-- 🔄 **Polling Support**: Simulated real-time updates every 10s (can be toggled). Note: Polling will reset the updated issues
+- 🔄 **Polling Support**: Simulated real-time updates every 10 seconds  
+  > ⚠️ **Note**: Polling will reset all updated issues as it reloads the mock data.
 
 ---
 
 ## 👥 Mocked Users
 
 ```ts
-
-registeredUsers = [
+const registeredUsers = [
   { id: 1, name: 'alice', role: 'admin' },
   { id: 2, name: 'bob', role: 'contributor' },
   { id: 3, name: 'carol', role: 'contributor' }
 ];
-
-To login use the above names
