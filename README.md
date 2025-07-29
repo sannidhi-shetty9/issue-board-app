@@ -26,6 +26,20 @@ This is a **demo project** that uses **mocked JSON data** and local state. It si
 
 ---
 
+## 👥 Login Instructions
+
+You can log in using any of the following **mock users**:
+
+| Username | Role         | Permissions                            |
+|----------|--------------|----------------------------------------|
+| `alice`  | **admin**     | ✅ Can move issues, update status/priority, and mark as resolved |
+| `bob`    | contributor  | 🔒 Read-only access                    |
+| `carol`  | contributor  | 🔒 Read-only access                    |
+
+> 🔐 **Note**: There is no password. Just enter the username exactly as shown above to simulate login.
+
+### Mocked User Data
+
 ## 👥 Mocked Users
 
 ```ts
