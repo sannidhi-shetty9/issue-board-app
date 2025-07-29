@@ -1,10 +1,17 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import type { Issue, PartialIssue } from "../../types";
 import { mockFetchIssues } from "../../utils/api";
 import { getLocalStorage, setLocalStorage } from "../../utils/storage";
 
 const maxRecentAccessedIssues = 2;
-const recentAccessedIssuesStoreageName = 'recentAccessedIssues';
+const recentAccessedIssuesStoreageName = "recentAccessedIssues";
 
 type SeveritiesType = {
   [key: number | string]: boolean;
@@ -16,6 +23,7 @@ type AssigneesType = {
 
 export interface IssueContextProps {
   issues: Issue[];
+  syncTime: Date | null;
   severities: SeveritiesType;
   assignees: AssigneesType;
   recentAccessedIssues: Issue[];
@@ -25,6 +33,9 @@ export interface IssueContextProps {
   updateSeverities: (newSeverities: SeveritiesType) => void;
   updateAssignees: (newAssignees: AssigneesType) => void;
   addRecentAccesedIssue: (issue: Issue) => void;
+  startPolling: () => void;
+  stopPolling: () => void;
+  isPolling: boolean;
 }
 
 const getDaysSinceCreated = (createdAt: string): number => {
@@ -56,6 +67,7 @@ const sortIssue = (a: Issue, b: Issue) => {
 
 const IssueContext = createContext<IssueContextProps>({
   issues: [],
+  syncTime: null,
   severities: {},
   assignees: {},
   recentAccessedIssues: [],
@@ -65,6 +77,9 @@ const IssueContext = createContext<IssueContextProps>({
   updateSeverities: () => {},
   updateAssignees: () => {},
   addRecentAccesedIssue: () => {},
+  startPolling: () => {},
+  stopPolling: () => {},
+  isPolling: false,
 });
 
 export const useIssue = () => useContext(IssueContext);
@@ -77,24 +92,52 @@ export const IssueProvider = ({ children }: { children: React.ReactNode }) => {
     2: true,
     3: true,
   });
+  const severitiesRef = useRef(severities);
   const [assignees, setAssignees] = useState<AssigneesType>({
     alice: true,
     bob: true,
     carol: true,
   });
+  const assigneesRef = useRef(assignees);
   const [recentAccessedIssues, setRecentAccessedIssues] = useState<Issue[]>([]);
+  const [syncTime, setSyncTime] = useState<Date | null>(null);
+  const syncRef = useRef<number>(undefined);
+  const [isPolling, setIsPolling] = useState(false)
 
-  useEffect(() => {
-    const storedRecent = getLocalStorage<Issue[]>(recentAccessedIssuesStoreageName) || []
-    setRecentAccessedIssues(storedRecent)
-  }, [])
-
-  useEffect(() => {
+  const fetchAndSetIssues = useCallback(() => {
     mockFetchIssues().then((res) => {
       const sortedIssues = [...(res as Issue[])].sort(sortIssue);
       issuesRef.current = sortedIssues;
-      setIssues(sortedIssues);
+      const filteredIssues = sortedIssues.filter((issue) => {
+        return (
+          severitiesRef.current[issue.severity] &&
+          assigneesRef.current[issue.assignee]
+        );
+      });
+      setIssues(filteredIssues);
+      setSyncTime(new Date());
+      // console.log("fetch and set issue:", new Date());
     });
+  }, [severitiesRef, assigneesRef]);
+
+  useEffect(() => {
+    const storedRecent =
+      getLocalStorage<Issue[]>(recentAccessedIssuesStoreageName) || [];
+    setRecentAccessedIssues(storedRecent);
+  }, []);
+
+  useEffect(() => {
+    severitiesRef.current = severities;
+  }, [severities]);
+
+  useEffect(() => {
+    assigneesRef.current = assignees;
+  }, [assignees]);
+
+  useEffect(() => {
+    fetchAndSetIssues();
+    // Cleanup on unmount
+    return () => clearInterval(syncRef.current);
   }, []);
 
   useEffect(() => {
@@ -103,6 +146,18 @@ export const IssueProvider = ({ children }: { children: React.ReactNode }) => {
     });
     setIssues(newIssues);
   }, [severities, assignees]);
+
+  const startPolling = () => {
+    clearInterval(syncRef.current);
+    // Start polling every 10 seconds
+    syncRef.current = setInterval(fetchAndSetIssues, 10000);
+    setIsPolling(true)
+  };
+
+  const stopPolling = () => {
+    clearInterval(syncRef.current);
+    setIsPolling(false)
+  };
 
   const getIssue = (id: string) => {
     return issues.find((issue) => issue.id === id) || null;
@@ -143,7 +198,7 @@ export const IssueProvider = ({ children }: { children: React.ReactNode }) => {
         issue,
         ...prev.filter((item) => issue.id !== item.id),
       ].slice(0, maxRecentAccessedIssues);
-      setLocalStorage<Issue[]>(recentAccessedIssuesStoreageName, updatedIssues)
+      setLocalStorage<Issue[]>(recentAccessedIssuesStoreageName, updatedIssues);
       return updatedIssues;
     });
   };
@@ -152,6 +207,7 @@ export const IssueProvider = ({ children }: { children: React.ReactNode }) => {
     <IssueContext.Provider
       value={{
         issues,
+        syncTime,
         severities,
         assignees,
         recentAccessedIssues,
@@ -161,6 +217,9 @@ export const IssueProvider = ({ children }: { children: React.ReactNode }) => {
         updateSeverities,
         updateAssignees,
         addRecentAccesedIssue,
+        startPolling,
+        stopPolling,
+        isPolling
       }}
     >
       {children}

@@ -52,9 +52,9 @@ export default function SeveritiesFilter() {
         </div>
       )}
       getOptionValue={(o) => o.value}
-      dropdownClass="bg-white dark:bg-gray-950 border min-w-full mt-1 rounded-md"
+      dropdownClass="bg-white dark:bg-gray-950 shadow-md dark:shadow-md min-w-full mt-1 rounded-md"
       openDropdownClass="p-1"
-      labelClass="border rounded-md p-1 cursor-pointer"
+      labelClass="shadow-md dark:shadow-md rounded-md p-1 cursor-pointer"
     />
   );
 }

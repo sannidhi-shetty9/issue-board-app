@@ -46,7 +46,7 @@ export default function Issues({}: IssueProps) {
   const columnElem = (
     <div className="flex gap-2">
       <table
-        className="border border-collapse h-full w-full"
+        className="border border-collapse shadow-md dark:shadow-md h-full w-full"
         // style={{ height: "100%" }}
       >
         <thead>
@@ -83,7 +83,7 @@ export default function Issues({}: IssueProps) {
                       showToast({
                         message: <div className="">Undo</div>,
                         timeout: 5000,
-                        className: "px-10 py-5 border rounded",
+                        className: "px-10 py-5 shadow-md dark:shadow-md rounded dark:shadow-md dark:border dark:border-gray-500",
                         onClick: (_, close) => {
                           updateIssue(id, { status: prevStatus });
                           close();
@@ -100,6 +100,7 @@ export default function Issues({}: IssueProps) {
                           onClick={() => {
                             navigate(`/issue/${issue.id}`);
                           }}
+                          className="shadow-md dark:shadow-md dark:border dark:border-gray-500 rounded-md p-2 text-center"
                         />
                       );
                     })}

@@ -31,10 +31,10 @@ const navigate = useNavigate();
         const id = node?.props['data-id']
         navigate(`/issue/${id}`)
       }}
-      dropdownClass="bg-white dark:bg-gray-950 min-w-full mt-2 border"
+      dropdownClass="bg-white dark:bg-gray-950 min-w-full mt-2 shadow-md dark:shadow-md"
       openDropdownClass="p-1 rounded-md"
       className=""
-      labelClass="p-2 border rounded-md"
+      labelClass="p-2 bg-white dark:bg-gray-950 shadow-md dark:shadow-md rounded-md"
       inputClass="border-none outline-none"
     />
   );

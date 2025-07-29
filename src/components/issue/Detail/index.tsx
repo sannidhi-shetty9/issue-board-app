@@ -41,7 +41,7 @@ export default function IssueDetail() {
       options={otherStatus}
       closeOnSelect={true}
       renderLabel={({ selected, isOpen }) => (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <div>{status}</div>
           <ChevronDown className={``} />
         </div>
@@ -61,9 +61,9 @@ export default function IssueDetail() {
         </div>
       )}
       getOptionValue={(o) => o.value}
-      dropdownClass="bg-white dark:bg-gray-950 border min-w-full mt-1 rounded-md"
+      dropdownClass="bg-white dark:bg-gray-950 shadow-md dark:shadow-md min-w-full mt-1 rounded-md"
       openDropdownClass="p-1"
-      labelClass="border rounded-md p-1 cursor-pointer"
+      labelClass="bg-white dark:bg-gray-900 shadow-md dark:shadow-md rounded-md p-1 cursor-pointer"
     />
   );
 
@@ -73,16 +73,16 @@ export default function IssueDetail() {
       value={null}
       options={otherPriorities}
       closeOnSelect={true}
-      renderLabel={({ selected, isOpen }) => (
-        <div className="flex items-center gap-1">
+      renderLabel={() => (
+        <div className="flex items-center gap-2">
           <div>{priority}</div>
           <ChevronDown className={``} />
         </div>
       )}
       //   onChange={(val) => console.log(val)}
-      getOptionLabel={(value, index) => (
+      getOptionLabel={(value) => (
         <div
-          className="flex items-center gap-1 cursor-pointer"
+          className="flex items-center gap-1 cursor-pointer px-1 w-full"
           onClick={() => {
             if (!isAdmin) return;
             prioritySelectRef.current?.close();
@@ -94,9 +94,9 @@ export default function IssueDetail() {
         </div>
       )}
       getOptionValue={(o) => o.value}
-      dropdownClass="bg-white dark:bg-gray-950 border min-w-full mt-1 rounded-md"
+      dropdownClass="bg-white dark:bg-gray-950 shadow-md dark:shadow-md min-w-full mt-1 rounded-md"
       openDropdownClass="p-1"
-      labelClass="border rounded-md p-1 cursor-pointer"
+      labelClass="bg-white dark:bg-gray-900 shadow-md dark:shadow-md rounded-md p-1 cursor-pointer"
     />
   );
 
@@ -108,7 +108,7 @@ export default function IssueDetail() {
           return (
             <div
               key={tag + index}
-              className="flex items-center gap-1 border rounded-md p-1 "
+              className="bg-white dark:bg-gray-900 shadow-md dark:shadow-md flex items-center gap-1 rounded-md p-1 "
             >
               <div>{tag}</div>
               {isAdmin && (
@@ -173,7 +173,7 @@ export default function IssueDetail() {
             issue.status = "Done";
             updateIssue(id, issue);
           }}
-          className="border rounded-md px-2 py-2 cursor-pointer"
+          className="bg-white dark:bg-gray-900 shadow-md dark:shadow-md border border-gray-200 dark:border-gray-500  rounded-md px-2 py-2 cursor-pointer"
         >
           Mark as done
         </button> }

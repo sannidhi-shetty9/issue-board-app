@@ -67,7 +67,7 @@ export default function Search({
           className={inputClass}
           cntClass={`flex ${inputCntClass}`}
           right={
-            <X onClick={() => changeHandler("")} className="cursor-pointer" />
+            <X onClick={() => changeHandler("")} className="cursor-pointer text-gray-500 dark:text-gray-400" />
           }
         />
       }

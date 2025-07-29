@@ -1,7 +1,7 @@
 // src/hooks/useDarkMode.ts
 import { useEffect, useState } from 'react';
 
-export default function useDarkMode(): [boolean, () => void] {
+export default function useDarkMode(): {isDark: boolean, toggleDarkMode: () => void, setDarkMode: (state: boolean) => void} {
   const [isDark, setIsDark] = useState<boolean>(() =>
     document.documentElement.classList.contains('dark')
   );
@@ -9,6 +9,12 @@ export default function useDarkMode(): [boolean, () => void] {
   const toggleDarkMode = () => {
     const html = document.documentElement;
     html.classList.toggle('dark');
+    setIsDark(html.classList.contains('dark'));
+  };
+
+  const setDarkMode = (state: boolean) => {
+    const html = document.documentElement;
+    html.classList?.[state ? 'add' : 'remove']('dark');
     setIsDark(html.classList.contains('dark'));
   };
 
@@ -25,5 +31,5 @@ export default function useDarkMode(): [boolean, () => void] {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
-  return [isDark, toggleDarkMode];
+  return {isDark, toggleDarkMode, setDarkMode};
 }
